@@ -34,6 +34,10 @@
                             500: '#5ebb37',
                             600: '#469327',
                         },
+                        accent: {
+                            DEFAULT: '#2563eb', // blue active tab from screenshot
+                            hover: '#1d4ed8'
+                        },
                         charcoal: {
                             DEFAULT: '#1c1a17',
                             hover: '#322f2a'
@@ -51,7 +55,7 @@
     <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -80,7 +84,7 @@
             top: 0;
             width: auto;
         }
-        /* Blinking animation for offline status dot */
+        /* Blinking animation for offline status dot and active microphone */
         @keyframes pulse-dot {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
@@ -90,74 +94,63 @@
         }
     </style>
 </head>
-<body class="text-[#1c1a17] min-h-screen pb-12 antialiased">
+<body class="text-[#1c1a17] min-h-screen pb-32 antialiased">
 
     <!-- App Wrapper Container -->
-    <div class="max-w-6xl mx-auto px-4 pt-6 sm:pt-10 space-y-6 sm:space-y-8">
+    <div class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         
         <!-- Header & Progress Section -->
-        <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/40 p-6 sm:p-8 rounded-[2rem] border border-cream-200 backdrop-blur-sm">
-            <div class="space-y-1">
-                <span class="text-xs font-bold tracking-widest text-salad-600 uppercase">weekly planner</span>
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1c1a17]">Список задач на неделю</h1>
-                <p class="text-sm text-cream-500 max-w-xl">
-                    спокойный и чистый планировщик: добавляйте задачи, отмечайте выполненное и смотрите план по дням без перегрузки.
-                </p>
+        <header class="bg-white/40 p-5 rounded-[2rem] border border-cream-200 backdrop-blur-sm flex justify-between items-center">
+            <div class="space-y-0.5">
+                <span class="text-[10px] font-bold tracking-widest text-salad-600 uppercase">weekly planner</span>
+                <h1 id="app-title-header" class="text-xl font-extrabold text-[#1c1a17]">Список задач на неделю</h1>
             </div>
             
-            <!-- Navigation Switch and Progress -->
-            <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-                <!-- Navigation Switch -->
-                <div class="bg-white/80 p-1.5 rounded-2xl border border-cream-200 flex gap-1 shadow-sm">
-                    <button id="view-planner-btn" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white">
-                        планер
-                    </button>
-                    <button id="view-backup-btn" class="px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100">
-                        резервные копии
-                    </button>
-                </div>
-
-                <!-- Progress Card -->
-                <div class="bg-white p-4 rounded-3xl border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] flex flex-col justify-center min-w-[160px]">
-                    <span class="text-[9px] font-bold tracking-wider text-cream-500 uppercase">прогресс на 10 дней</span>
-                    <div class="text-3xl font-black text-[#1c1a17] my-0.5 flex items-baseline gap-1">
-                        <span id="global-progress">0%</span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-salad-500"></span>
-                    </div>
-                    <span class="text-[10px] text-cream-500" id="global-progress-detail">0 из 0 выполнено</span>
-                </div>
+            <!-- Progress Card -->
+            <div class="bg-white py-1.5 px-3 rounded-full border border-cream-200 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-salad-500 pulse-salad-dot"></span>
+                <span id="global-progress" class="text-xs font-bold text-[#1c1a17]">0%</span>
             </div>
         </header>
 
         <!-- Dynamic Screen Content Area -->
-        <main id="main-content-area">
+        <main id="main-content-area" class="space-y-6">
 
             <!-- SCREEN 1: Planner Workspace -->
-            <div id="screen-planner" class="space-y-6 sm:space-y-8">
+            <div id="screen-planner" class="space-y-6">
                 <!-- Quick Add Form Card -->
-                <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
-                    <form id="task-form" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
-                        <div class="md:col-span-7 flex flex-col space-y-2">
-                            <label class="text-xs font-bold tracking-wider text-cream-500 uppercase">новая задача</label>
-                            <input id="task-input" type="text" placeholder="изучить нейросети..." required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
-                        </div>
-                        <div class="md:col-span-3 flex flex-col space-y-2 relative">
-                            <label class="text-xs font-bold tracking-wider text-cream-500 uppercase">дата выполнения</label>
-                            <div class="relative">
-                                <input id="task-date" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
+                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm">
+                    <form id="task-form" class="space-y-4">
+                        <div class="flex flex-col space-y-1.5">
+                            <label class="text-[10px] font-bold tracking-wider text-cream-500 uppercase">новая задача</label>
+                            <div class="relative flex items-center">
+                                <input id="task-input" type="text" placeholder="изучить нейросети..." required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl pl-4 pr-12 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
+                                <button type="button" id="mic-btn" class="absolute right-3.5 p-1.5 text-cream-400 hover:text-salad-500 active:scale-95 transition-all flex items-center justify-center" title="надиктовать задачу">
+                                    <svg id="mic-icon" class="w-5 h-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                        <div class="md:col-span-2">
-                            <button type="submit" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-sm font-semibold rounded-2xl py-3 px-6 transition-all duration-200 shadow-sm">
-                                добавить
-                            </button>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex flex-col space-y-1.5 relative">
+                                <label class="text-[10px] font-bold tracking-wider text-cream-500 uppercase">дата выполнения</label>
+                                <div class="relative">
+                                    <input id="task-date" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
+                                </div>
+                            </div>
+                            <div class="flex items-end">
+                                <button type="submit" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-sm font-semibold rounded-xl py-2.5 transition-all duration-200 shadow-sm">
+                                    добавить задачу
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </section>
 
                 <!-- Horizontal Days Selector Row with Week Navigators -->
                 <div class="flex items-center gap-2">
-                    <button id="prev-week" class="p-3.5 bg-white border border-cream-200 rounded-2xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="предыдущая неделя">
+                    <button id="prev-week" class="p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="предыдущая неделя">
                         <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
@@ -167,129 +160,134 @@
                         <!-- Programmatically rendered tabs -->
                     </nav>
 
-                    <button id="next-week" class="p-3.5 bg-white border border-cream-200 rounded-2xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="следующая неделя">
+                    <button id="next-week" class="p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="следующая неделя">
                         <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
                 </div>
 
-                <!-- Interactive Lists Layout (Side-by-side starting from medium screens) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <!-- Selected Day Interactive List -->
+                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm flex flex-col justify-between min-h-[350px]">
+                    <div class="space-y-4">
+                        <div class="border-b border-cream-100 pb-3">
+                            <span class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">на выбранный день</span>
+                            <div class="flex justify-between items-baseline mt-1">
+                                <h2 class="text-xl font-extrabold text-[#1c1a17] capitalize" id="selected-day-name">понедельник</h2>
+                                <span class="text-xs text-cream-400" id="selected-day-stats">0 задач / 0 в плане</span>
+                            </div>
+                        </div>
+
+                        <!-- Selected Day Tasks Container -->
+                        <div class="space-y-2.5 max-h-[280px] overflow-y-auto no-scrollbar" id="selected-tasks-list">
+                            <!-- Dynamic list of tasks -->
+                        </div>
+                    </div>
                     
-                    <!-- Column 1: Selected Day Interactive List -->
-                    <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[380px]">
-                        <div class="space-y-5">
-                            <div class="border-b border-cream-100 pb-4">
-                                <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">на выбранный день</span>
-                                <div class="flex justify-between items-baseline mt-2">
-                                    <h2 class="text-2xl font-extrabold text-[#1c1a17] capitalize" id="selected-day-name">понедельник</h2>
-                                    <span class="text-xs text-cream-400" id="selected-day-stats">0 задач / 0 в плане</span>
-                                </div>
-                            </div>
-
-                            <!-- Selected Day Tasks Container -->
-                            <div class="space-y-2.5 max-h-[300px] overflow-y-auto no-scrollbar" id="selected-tasks-list">
-                                <!-- Dynamic list of tasks -->
-                            </div>
-                        </div>
-                        
-                        <div class="pt-4 border-t border-cream-100 mt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-salad-500 pulse-salad-dot"></span>
-                                <span class="text-[11px] text-cream-500 font-normal">офлайн–режим готов: автосохранение активно</span>
-                            </div>
-                            <button id="clear-all" class="text-xs font-medium text-red-500 hover:text-red-600 transition-colors">
-                                очистить все
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- Column 2: Full Weekly Overview -->
-                    <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
-                        <div class="flex items-baseline justify-between border-b border-cream-100 pb-4">
-                            <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">обзор на 10 дней</span>
-                            <h2 class="text-2xl font-extrabold text-[#1c1a17]">Запланировано</h2>
-                        </div>
-
-                        <!-- Days Overview Container -->
-                        <div class="space-y-5 max-h-[460px] overflow-y-auto no-scrollbar pr-1" id="weekly-overview">
-                            <!-- Dynamic overview lists -->
-                        </div>
-                    </section>
-                </div>
+                    <div class="pt-3 border-t border-cream-100 mt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+                        <span class="text-[10px] text-cream-400 font-normal">все данные надежно хранятся в памяти устройства</span>
+                        <button id="clear-all" class="text-xs font-medium text-red-500 hover:text-red-600 transition-colors">
+                            очистить все
+                        </button>
+                    </div>
+                </section>
             </div>
 
 
-            <!-- SCREEN 2: Backup & Restore Manager -->
+            <!-- SCREEN 2: 10 Days Planned Overview -->
+            <div id="screen-overview" class="hidden space-y-6">
+                <!-- Full Weekly Overview -->
+                <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
+                    <div class="flex items-baseline justify-between border-b border-cream-100 pb-3">
+                        <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">обзор на 10 дней</span>
+                        <h2 class="text-xl font-extrabold text-[#1c1a17]">Запланировано</h2>
+                    </div>
+
+                    <!-- Days Overview Container -->
+                    <div class="space-y-5 max-h-[520px] overflow-y-auto no-scrollbar pr-1" id="weekly-overview">
+                        <!-- Dynamic overview lists -->
+                    </div>
+                </section>
+            </div>
+
+
+            <!-- SCREEN 3: Backup & Restore Manager -->
             <div id="screen-backup" class="hidden space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                    
-                    <!-- Export Box -->
-                    <section class="bg-white p-6 sm:p-8 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
-                        <div class="border-b border-cream-100 pb-4">
-                            <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
-                            <h2 class="text-2xl font-extrabold text-[#1c1a17] mt-1">Резервная копия</h2>
-                            <p class="text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
-                        </div>
+                <!-- Export Box -->
+                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
+                    <div class="border-b border-cream-100 pb-3">
+                        <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
+                        <h2 class="text-xl font-extrabold text-[#1c1a17] mt-0.5">Резервная копия</h2>
+                        <p class="text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
+                    </div>
 
-                        <div class="space-y-4">
-                            <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-3.5 px-6 rounded-2xl transition-all flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                скачать файл резервной копии
+                    <div class="space-y-3">
+                        <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            скачать файл резервной копии
+                        </button>
+
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
+                            <textarea id="export-text-area" readonly class="w-full h-20 bg-[#efede6]/40 border border-cream-200 rounded-xl p-3 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
+                            <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2 px-4 rounded-xl transition-all">
+                                скопировать текстовый ключ
                             </button>
+                        </div>
+                    </div>
+                </section>
 
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
-                                <textarea id="export-text-area" readonly class="w-full h-24 bg-[#efede6]/40 border border-cream-200 rounded-xl p-3 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
-                                <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2.5 px-4 rounded-xl transition-all">
-                                    скопировать текстовый ключ
-                                </button>
+                <!-- Import Box -->
+                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
+                    <div class="border-b border-cream-100 pb-3">
+                        <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
+                        <h2 class="text-xl font-extrabold text-[#1c1a17] mt-0.5">Импорт планов</h2>
+                        <p class="text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- File upload -->
+                        <div class="border-2 border-dashed border-cream-300 rounded-xl p-3 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
+                            <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="space-y-0.5 pointer-events-none">
+                                <svg class="w-5 h-5 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                <p class="text-xs font-semibold text-[#1c1a17]">выберите файл .json</p>
                             </div>
                         </div>
-                    </section>
 
-                    <!-- Import Box -->
-                    <section class="bg-white p-6 sm:p-8 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
-                        <div class="border-b border-cream-100 pb-4">
-                            <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
-                            <h2 class="text-2xl font-extrabold text-[#1c1a17] mt-1">Импорт планов</h2>
-                            <p class="text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
+                        <!-- Text restore -->
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
+                            <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-20 bg-[#efede6]/20 border border-cream-200 rounded-xl p-3 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
+                            <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-2 px-4 rounded-xl transition-all">
+                                восстановить по ключу
+                            </button>
                         </div>
-
-                        <div class="space-y-4">
-                            <!-- File upload -->
-                            <div class="border-2 border-dashed border-cream-300 rounded-2xl p-4 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
-                                <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                                <div class="space-y-1 pointer-events-none">
-                                    <svg class="w-6 h-6 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                    <p class="text-xs font-semibold text-[#1c1a17]">выберите или перетащите файл .json</p>
-                                    <p class="text-[10px] text-cream-400">для загрузки файла резервной копии</p>
-                                </div>
-                            </div>
-
-                            <!-- Text restore -->
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
-                                <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-24 bg-[#efede6]/20 border border-cream-200 rounded-xl p-3 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
-                                <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all">
-                                    восстановить по ключу
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
+                    </div>
+                </section>
             </div>
 
         </main>
+    </div>
+
+    <!-- Bottom Floating Navigation Bar (Matches active style from image_ec448c.png precisely) -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md p-1 rounded-2xl border border-cream-200 shadow-md flex justify-around items-center max-w-[95vw] w-full sm:max-w-md">
+        <button onclick="switchView('planner')" id="tab-planner" class="flex-1 py-3 text-center transition-all duration-200">
+            <span class="text-xs font-extrabold tracking-wider uppercase text-accent" id="label-planner">планер</span>
+        </button>
+        <button onclick="switchView('overview')" id="tab-overview" class="flex-1 py-3 text-center transition-all duration-200">
+            <span class="text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-overview">обзор</span>
+        </button>
+        <button onclick="switchView('backup')" id="tab-backup" class="flex-1 py-3 text-center transition-all duration-200">
+            <span class="text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-backup">бэкап</span>
+        </button>
     </div>
 
     <!-- Soft Confirmation Dialog -->
     <div id="confirm-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
         <div class="bg-white p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
             <h3 class="font-bold text-lg text-[#1c1a17] lowercase">удалить все задачи?</h3>
-            <p class="text-xs text-cream-500 leading-relaxed">это действие очистит абсолютно всю вашу историю задач, восстановить планы будет невозможно.</p>
+            <p class="text-xs text-cream-500 leading-relaxed">это действие полностью очистит вашу историю задач, восстановить планы невозможно.</p>
             <div class="flex gap-2.5 justify-end">
                 <button id="dialog-cancel" class="px-4 py-2 text-xs font-semibold rounded-xl bg-cream-100 hover:bg-cream-200 text-cream-500 transition-all">отмена</button>
                 <button id="dialog-confirm" class="px-4 py-2 text-xs font-semibold text-white rounded-xl bg-red-500 hover:bg-red-600 transition-all">удалить все</button>
@@ -298,7 +296,7 @@
     </div>
 
     <!-- Minimalistic Alert Toast System -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toast" class="fixed bottom-24 right-6 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
         <div class="bg-[#1c1a17] text-white px-4 py-2.5 rounded-2xl shadow-lg border border-cream-500/10 flex items-center gap-2">
             <span id="toast-message" class="text-xs font-medium">сообщение</span>
         </div>
@@ -321,13 +319,15 @@
             tasks: [],
             currentMonday: null, // Date object of current week Monday
             selectedDateStr: '', // Format: 'YYYY-MM-DD'
-            currentView: 'planner' // 'planner' or 'backup'
+            currentView: 'planner' // 'planner', 'overview' or 'backup'
         };
 
         // DOM elements
-        const viewPlannerBtn = document.getElementById('view-planner-btn');
-        const viewBackupBtn = document.getElementById('view-backup-btn');
+        const viewPlannerBtn = document.getElementById('tab-planner');
+        const viewOverviewBtn = document.getElementById('tab-overview');
+        const viewBackupBtn = document.getElementById('tab-backup');
         const screenPlanner = document.getElementById('screen-planner');
+        const screenOverview = document.getElementById('screen-overview');
         const screenBackup = document.getElementById('screen-backup');
 
         const taskForm = document.getElementById('task-form');
@@ -339,9 +339,14 @@
         const selectedTasksList = document.getElementById('selected-tasks-list');
         const weeklyOverview = document.getElementById('weekly-overview');
         const globalProgress = document.getElementById('global-progress');
-        const globalProgressDetail = document.getElementById('global-progress-detail');
         const prevWeekBtn = document.getElementById('prev-week');
         const nextWeekBtn = document.getElementById('next-week');
+
+        // Voice Dictation Elements
+        const micBtn = document.getElementById('mic-btn');
+        const micIcon = document.getElementById('mic-icon');
+        let recognition = null;
+        let isListening = false;
 
         // Backup DOM elements
         const exportTextArea = document.getElementById('export-text-area');
@@ -365,6 +370,7 @@
             initStorage();
             renderAll();
             setupEvents();
+            setupVoiceDictation();
             registerPWA();
         });
 
@@ -550,7 +556,7 @@
             });
         }
 
-        // Render Full overview card on the right side (Displays exactly 10 days starting from today)
+        // Render Full overview card (Displays exactly 10 days starting from today)
         function renderOverview() {
             weeklyOverview.innerHTML = '';
             
@@ -618,7 +624,6 @@
             const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             globalProgress.textContent = `${percent}%`;
-            globalProgressDetail.textContent = `${completed} из ${total} задач выполнено`;
         }
 
         // Action operations
@@ -627,6 +632,10 @@
             taskDateInput.value = dateStr;
             state.currentMonday = getMonday(new Date(dateStr));
             renderAll();
+            
+            // Automatically switch back to planner view upon selecting a date
+            switchView('planner');
+            showToast('выбран день: ' + new Date(dateStr).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }));
         };
 
         window.toggleTask = function(id) {
@@ -649,15 +658,24 @@
         // Screen switching function
         function switchView(viewName) {
             state.currentView = viewName;
+            
+            // Reset active classes on tab labels matching style in image_ec448c.png
+            document.getElementById('label-planner').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            document.getElementById('label-overview').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            document.getElementById('label-backup').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            
+            screenPlanner.classList.add('hidden');
+            screenOverview.classList.add('hidden');
+            screenBackup.classList.add('hidden');
+            
             if (viewName === 'planner') {
-                viewPlannerBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white";
-                viewBackupBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100";
+                document.getElementById('label-planner').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenPlanner.classList.remove('hidden');
-                screenBackup.classList.add('hidden');
-            } else {
-                viewBackupBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white";
-                viewPlannerBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100";
-                screenPlanner.classList.add('hidden');
+            } else if (viewName === 'overview') {
+                document.getElementById('label-overview').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
+                screenOverview.classList.remove('hidden');
+            } else if (viewName === 'backup') {
+                document.getElementById('label-backup').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenBackup.classList.remove('hidden');
                 
                 // Refresh export string on open
@@ -675,11 +693,80 @@
             return true;
         }
 
+        // Setup Voice Dictation Engine
+        function setupVoiceDictation() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.lang = 'ru-RU';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    micBtn.classList.remove('text-cream-400', 'hover:text-salad-500');
+                    micBtn.classList.add('text-salad-500', 'pulse-salad-dot');
+                    showToast('слушаю: говорите...');
+                };
+
+                recognition.onresult = (event) => {
+                    const resultText = event.results[0][0].transcript;
+                    if (resultText) {
+                        taskInput.value = resultText.toLowerCase();
+                        showToast('речь распознана');
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('speech recognition error:', event.error);
+                    if (event.error === 'not-allowed') {
+                        showToast('ошибка: доступ к микрофону заблокирован');
+                    } else if (event.error === 'no-speech') {
+                        showToast('ошибка: речь не распознана');
+                    } else {
+                        showToast('ошибка распознавания: ' + event.error);
+                    }
+                    resetMicState();
+                };
+
+                recognition.onend = () => {
+                    resetMicState();
+                };
+
+                micBtn.addEventListener('click', () => {
+                    if (isListening) {
+                        recognition.stop();
+                    } else {
+                        try {
+                            recognition.start();
+                        } catch (err) {
+                            console.error('failed to start speech recognition:', err);
+                        }
+                    }
+                });
+            } else {
+                // Speech recognition is not supported or blocked in current frame
+                micBtn.addEventListener('click', () => {
+                    showToast('ошибка: ваш браузер не поддерживает голосовой ввод');
+                });
+                micBtn.classList.add('opacity-40', 'cursor-not-allowed');
+                micBtn.title = 'голосовой ввод не поддерживается';
+            }
+        }
+
+        function resetMicState() {
+            isListening = false;
+            if (micBtn) {
+                micBtn.classList.remove('text-salad-500', 'pulse-salad-dot');
+                micBtn.classList.add('text-cream-400', 'hover:text-salad-500');
+            }
+        }
+
         // Form Submission and Navigation
         function setupEvents() {
-            // View navigation switches
-            viewPlannerBtn.addEventListener('click', () => switchView('planner'));
-            viewBackupBtn.addEventListener('click', () => switchView('backup'));
+            // Restore default view switcher states
+            switchView('planner');
 
             // Week navigation click handlers
             prevWeekBtn.addEventListener('click', () => {
@@ -856,7 +943,7 @@
             if ('serviceWorker' in navigator) {
                 const currentPath = location.pathname;
                 const swCode = `
-                    const CACHE_NAME = 'planner-cache-v2';
+                    const CACHE_NAME = 'planner-cache-v3';
                     const ASSETS = [
                         '${currentPath}',
                         'https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap',
