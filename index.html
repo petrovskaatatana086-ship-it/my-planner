@@ -8,8 +8,12 @@
     <meta name="theme-color" content="#1c1a17">
     <title>Список задач на неделю</title>
 
-    <!-- Inline Web App Manifest to enable immediate PWA installation -->
-    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%20%D0%BD%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E%22%2C%22short_name%22%3A%22%D0%9F%D0%BB%D0%B0%D0%BD%D0%B5%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23efede6%22%2C%22theme_color%22%3A%22%231c1a17%22%7D">
+    <!-- Beautiful customized vector icon for browser tabs and shortcut installation -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23efede6'/><circle cx='256' cy='256' r='160' fill='%23e3f3d8' stroke='%235ebb37' stroke-width='24'/><circle cx='256' cy='256' r='60' fill='%231c1a17'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23efede6'/><circle cx='256' cy='256' r='160' fill='%23e3f3d8' stroke='%235ebb37' stroke-width='24'/><circle cx='256' cy='256' r='60' fill='%231c1a17'/></svg>">
+
+    <!-- Inline Web App Manifest with the embedded SVG launcher icon inside -->
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%20%D0%BD%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E%22%2C%22short_name%22%3A%22%D0%9F%D0%BB%D0%B0%D0%BD%D0%B5%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23efede6%22%2C%22theme_color%22%3A%22%231c1a17%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org/2000/svg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23efede6%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%27160%27%20fill%3D%27%23e3f3d8%27%20stroke%3D%27%235ebb37%27%20stroke-width%3D%2724%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%2760%27%20fill%3D%27%231c1a17%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
     <!-- Tailwind CSS Pre-configuration to prevent race conditions on loading -->
     <script>
@@ -55,7 +59,7 @@
     <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body {
