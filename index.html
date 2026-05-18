@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1c1a17">
+    <title>Список задач на неделю</title>
+
+    <!-- Inline Web App Manifest to enable immediate PWA installation -->
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%20%D0%BD%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E%22%2C%22short_name%22%3A%22%D0%9F%D0%BB%D0%B0%D0%BD%D0%B5%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23efede6%22%2C%22theme_color%22%3A%22%231c1a17%22%7D">
+
+    <!-- Tailwind CSS Pre-configuration to prevent race conditions on loading -->
+    <script>
+        window.tailwind = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#fbfbfa',
+                            100: '#efede6',
+                            200: '#e4e2da',
+                            300: '#d5d2c7',
+                            400: '#a39f90',
+                            500: '#757163',
+                        },
+                        salad: {
+                            50: '#f4faf0',
+                            100: '#e3f3d8',
+                            200: '#cbeabc',
+                            300: '#aadd91',
+                            400: '#83cb5f',
+                            500: '#5ebb37',
+                            600: '#469327',
+                        },
+                        charcoal: {
+                            DEFAULT: '#1c1a17',
+                            hover: '#322f2a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #efede6;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom scrollbar hiding for absolute clean look on mobile and desktop */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom styling for native date input to match the minimalist theme */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+        /* Blinking animation for offline status dot */
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .pulse-salad-dot {
+            animation: pulse-dot 2s infinite;
+        }
+    </style>
+</head>
+<body class="text-[#1c1a17] min-h-screen pb-12 antialiased">
+
+    <!-- App Wrapper Container -->
+    <div class="max-w-6xl mx-auto px-4 pt-6 sm:pt-10 space-y-6 sm:space-y-8">
+        
+        <!-- Header & Progress Section -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/40 p-6 sm:p-8 rounded-[2rem] border border-cream-200 backdrop-blur-sm">
+            <div class="space-y-1">
+                <span class="text-xs font-bold tracking-widest text-salad-600 uppercase">weekly planner</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1c1a17]">Список задач на неделю</h1>
+                <p class="text-sm text-cream-500 max-w-xl">
+                    спокойный и чистый планировщик: добавляйте задачи, отмечайте выполненное и смотрите план по дням без перегрузки.
+                </p>
+            </div>
+            
+            <!-- Navigation Switch and Progress -->
+            <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+                <!-- Navigation Switch -->
+                <div class="bg-white/80 p-1.5 rounded-2xl border border-cream-200 flex gap-1 shadow-sm">
+                    <button id="view-planner-btn" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white">
+                        планер
+                    </button>
+                    <button id="view-backup-btn" class="px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100">
+                        резервные копии
+                    </button>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="bg-white p-4 rounded-3xl border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] flex flex-col justify-center min-w-[160px]">
+                    <span class="text-[9px] font-bold tracking-wider text-cream-500 uppercase">прогресс на 10 дней</span>
+                    <div class="text-3xl font-black text-[#1c1a17] my-0.5 flex items-baseline gap-1">
+                        <span id="global-progress">0%</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-salad-500"></span>
+                    </div>
+                    <span class="text-[10px] text-cream-500" id="global-progress-detail">0 из 0 выполнено</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Screen Content Area -->
+        <main id="main-content-area">
+
+            <!-- SCREEN 1: Planner Workspace -->
+            <div id="screen-planner" class="space-y-6 sm:space-y-8">
+                <!-- Quick Add Form Card -->
+                <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
+                    <form id="task-form" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                        <div class="md:col-span-7 flex flex-col space-y-2">
+                            <label class="text-xs font-bold tracking-wider text-cream-500 uppercase">новая задача</label>
+                            <input id="task-input" type="text" placeholder="изучить нейросети..." required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
+                        </div>
+                        <div class="md:col-span-3 flex flex-col space-y-2 relative">
+                            <label class="text-xs font-bold tracking-wider text-cream-500 uppercase">дата выполнения</label>
+                            <div class="relative">
+                                <input id="task-date" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-sm font-semibold rounded-2xl py-3 px-6 transition-all duration-200 shadow-sm">
+                                добавить
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Horizontal Days Selector Row with Week Navigators -->
+                <div class="flex items-center gap-2">
+                    <button id="prev-week" class="p-3.5 bg-white border border-cream-200 rounded-2xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="предыдущая неделя">
+                        <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <nav class="flex-1 flex gap-2.5 overflow-x-auto pb-1 no-scrollbar" id="day-tabs">
+                        <!-- Programmatically rendered tabs -->
+                    </nav>
+
+                    <button id="next-week" class="p-3.5 bg-white border border-cream-200 rounded-2xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="следующая неделя">
+                        <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Interactive Lists Layout (Side-by-side starting from medium screens) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    
+                    <!-- Column 1: Selected Day Interactive List -->
+                    <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[380px]">
+                        <div class="space-y-5">
+                            <div class="border-b border-cream-100 pb-4">
+                                <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">на выбранный день</span>
+                                <div class="flex justify-between items-baseline mt-2">
+                                    <h2 class="text-2xl font-extrabold text-[#1c1a17] capitalize" id="selected-day-name">понедельник</h2>
+                                    <span class="text-xs text-cream-400" id="selected-day-stats">0 задач / 0 в плане</span>
+                                </div>
+                            </div>
+
+                            <!-- Selected Day Tasks Container -->
+                            <div class="space-y-2.5 max-h-[300px] overflow-y-auto no-scrollbar" id="selected-tasks-list">
+                                <!-- Dynamic list of tasks -->
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-cream-100 mt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-salad-500 pulse-salad-dot"></span>
+                                <span class="text-[11px] text-cream-500 font-normal">офлайн–режим готов: автосохранение активно</span>
+                            </div>
+                            <button id="clear-all" class="text-xs font-medium text-red-500 hover:text-red-600 transition-colors">
+                                очистить все
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Column 2: Full Weekly Overview -->
+                    <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
+                        <div class="flex items-baseline justify-between border-b border-cream-100 pb-4">
+                            <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">обзор на 10 дней</span>
+                            <h2 class="text-2xl font-extrabold text-[#1c1a17]">Запланировано</h2>
+                        </div>
+
+                        <!-- Days Overview Container -->
+                        <div class="space-y-5 max-h-[460px] overflow-y-auto no-scrollbar pr-1" id="weekly-overview">
+                            <!-- Dynamic overview lists -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+            <!-- SCREEN 2: Backup & Restore Manager -->
+            <div id="screen-backup" class="hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    
+                    <!-- Export Box -->
+                    <section class="bg-white p-6 sm:p-8 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
+                        <div class="border-b border-cream-100 pb-4">
+                            <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
+                            <h2 class="text-2xl font-extrabold text-[#1c1a17] mt-1">Резервная копия</h2>
+                            <p class="text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-3.5 px-6 rounded-2xl transition-all flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                скачать файл резервной копии
+                            </button>
+
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
+                                <textarea id="export-text-area" readonly class="w-full h-24 bg-[#efede6]/40 border border-cream-200 rounded-xl p-3 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
+                                <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2.5 px-4 rounded-xl transition-all">
+                                    скопировать текстовый ключ
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Import Box -->
+                    <section class="bg-white p-6 sm:p-8 rounded-[2rem] border border-cream-200 shadow-[0_4px_24px_rgba(0,0,0,0.02)] space-y-5">
+                        <div class="border-b border-cream-100 pb-4">
+                            <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
+                            <h2 class="text-2xl font-extrabold text-[#1c1a17] mt-1">Импорт планов</h2>
+                            <p class="text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- File upload -->
+                            <div class="border-2 border-dashed border-cream-300 rounded-2xl p-4 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
+                                <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="space-y-1 pointer-events-none">
+                                    <svg class="w-6 h-6 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                    <p class="text-xs font-semibold text-[#1c1a17]">выберите или перетащите файл .json</p>
+                                    <p class="text-[10px] text-cream-400">для загрузки файла резервной копии</p>
+                                </div>
+                            </div>
+
+                            <!-- Text restore -->
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
+                                <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-24 bg-[#efede6]/20 border border-cream-200 rounded-xl p-3 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
+                                <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all">
+                                    восстановить по ключу
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Soft Confirmation Dialog -->
+    <div id="confirm-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
+        <div class="bg-white p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
+            <h3 class="font-bold text-lg text-[#1c1a17] lowercase">удалить все задачи?</h3>
+            <p class="text-xs text-cream-500 leading-relaxed">это действие очистит абсолютно всю вашу историю задач, восстановить планы будет невозможно.</p>
+            <div class="flex gap-2.5 justify-end">
+                <button id="dialog-cancel" class="px-4 py-2 text-xs font-semibold rounded-xl bg-cream-100 hover:bg-cream-200 text-cream-500 transition-all">отмена</button>
+                <button id="dialog-confirm" class="px-4 py-2 text-xs font-semibold text-white rounded-xl bg-red-500 hover:bg-red-600 transition-all">удалить все</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimalistic Alert Toast System -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-[#1c1a17] text-white px-4 py-2.5 rounded-2xl shadow-lg border border-cream-500/10 flex items-center gap-2">
+            <span id="toast-message" class="text-xs font-medium">сообщение</span>
+        </div>
+    </div>
+
+    <script>
+        // Constants for localized days
+        const DAYS = [
+            { id: 0, name: 'понедельник', short: 'пн' },
+            { id: 1, name: 'вторник', short: 'вт' },
+            { id: 2, name: 'среда', short: 'ср' },
+            { id: 3, name: 'четверг', short: 'чт' },
+            { id: 4, name: 'пятница', short: 'пт' },
+            { id: 5, name: 'суббота', short: 'сб' },
+            { id: 6, name: 'воскресенье', short: 'вс' }
+        ];
+
+        // Application State
+        let state = {
+            tasks: [],
+            currentMonday: null, // Date object of current week Monday
+            selectedDateStr: '', // Format: 'YYYY-MM-DD'
+            currentView: 'planner' // 'planner' or 'backup'
+        };
+
+        // DOM elements
+        const viewPlannerBtn = document.getElementById('view-planner-btn');
+        const viewBackupBtn = document.getElementById('view-backup-btn');
+        const screenPlanner = document.getElementById('screen-planner');
+        const screenBackup = document.getElementById('screen-backup');
+
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('task-input');
+        const taskDateInput = document.getElementById('task-date');
+        const dayTabs = document.getElementById('day-tabs');
+        const selectedDayName = document.getElementById('selected-day-name');
+        const selectedDayStats = document.getElementById('selected-day-stats');
+        const selectedTasksList = document.getElementById('selected-tasks-list');
+        const weeklyOverview = document.getElementById('weekly-overview');
+        const globalProgress = document.getElementById('global-progress');
+        const globalProgressDetail = document.getElementById('global-progress-detail');
+        const prevWeekBtn = document.getElementById('prev-week');
+        const nextWeekBtn = document.getElementById('next-week');
+
+        // Backup DOM elements
+        const exportTextArea = document.getElementById('export-text-area');
+        const copyTextBtn = document.getElementById('copy-text-btn');
+        const exportFileBtn = document.getElementById('export-file-btn');
+        const importFileInput = document.getElementById('import-file-input');
+        const importTextArea = document.getElementById('import-text-area');
+        const importTextBtn = document.getElementById('import-text-btn');
+
+        // Dialog & Toast elements
+        const confirmDialog = document.getElementById('confirm-dialog');
+        const clearAllBtn = document.getElementById('clear-all');
+        const dialogCancel = document.getElementById('dialog-cancel');
+        const dialogConfirm = document.getElementById('dialog-confirm');
+        const toastEl = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+
+        // Init App
+        window.addEventListener('DOMContentLoaded', () => {
+            setCurrentDay();
+            initStorage();
+            renderAll();
+            setupEvents();
+            registerPWA();
+        });
+
+        // Setup current day to pre-select it
+        function setCurrentDay() {
+            const today = new Date();
+            state.currentMonday = getMonday(today);
+            state.selectedDateStr = formatDateISO(today);
+            taskDateInput.value = state.selectedDateStr;
+        }
+
+        // Helper to get Monday of any date
+        function getMonday(d) {
+            const date = new Date(d);
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(date.setDate(diff));
+            monday.setHours(0,0,0,0);
+            return monday;
+        }
+
+        // Helper to get safe timezone-independent ISO date string
+        function formatDateISO(date) {
+            const offset = date.getTimezoneOffset();
+            const adjustedDate = new Date(date.getTime() - (offset * 60 * 1000));
+            return adjustedDate.toISOString().split('T')[0];
+        }
+
+        // Safe Storage handling with migration for old indices
+        function initStorage() {
+            try {
+                const stored = localStorage.getItem('weekly_tasks_pwa');
+                if (stored) {
+                    state.tasks = JSON.parse(stored);
+                    
+                    // Migrate old index-based tasks to real ISO date strings of the current week
+                    let migrated = false;
+                    state.tasks.forEach(t => {
+                        if (t.day !== undefined && !t.date) {
+                            const monday = getMonday(new Date());
+                            const taskDate = new Date(monday);
+                            taskDate.setDate(monday.getDate() + t.day);
+                            t.date = formatDateISO(taskDate);
+                            delete t.day;
+                            migrated = true;
+                        }
+                    });
+                    if (migrated) {
+                        saveTasks();
+                    }
+                } else {
+                    const todayStr = formatDateISO(new Date());
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const tomorrowStr = formatDateISO(tomorrow);
+                    
+                    state.tasks = [
+                        { id: '1', text: 'изучить нейросети и внедрить планировщик', date: todayStr, completed: false },
+                        { id: '2', text: 'сделать утреннюю разминку', date: tomorrowStr, completed: true }
+                    ];
+                    saveTasks();
+                }
+            } catch (err) {
+                console.error('storage error:', err);
+            }
+        }
+
+        // Save to browser memory
+        function saveTasks() {
+            localStorage.setItem('weekly_tasks_pwa', JSON.stringify(state.tasks));
+            // Update export string when state changes
+            exportTextArea.value = JSON.stringify(state.tasks);
+        }
+
+        // Rendering Pipeline
+        function renderAll() {
+            renderTabs();
+            renderSelectedDay();
+            renderOverview();
+            renderMetrics();
+            
+            // Sync current state key into backup window text block
+            exportTextArea.value = JSON.stringify(state.tasks);
+        }
+
+        // Helper to notify user without ugly default alerts
+        function showToast(message) {
+            toastMsg.textContent = message;
+            toastEl.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            setTimeout(() => {
+                toastEl.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Render Dynamic horizontal calendar days selector
+        function renderTabs() {
+            dayTabs.innerHTML = '';
+            const monday = new Date(state.currentMonday);
+
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(monday);
+                currentDay.setDate(monday.getDate() + i);
+                const dateStr = formatDateISO(currentDay);
+                
+                const dayTasks = state.tasks.filter(t => t.date === dateStr);
+                const isActive = state.selectedDateStr === dateStr;
+                
+                const dayNameShort = DAYS[i].short;
+                const dayNum = currentDay.getDate();
+                const monthName = currentDay.toLocaleString('ru-RU', { month: 'short' }).replace('.', '');
+                
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `flex-1 min-w-[76px] py-2.5 px-1.5 rounded-2xl border text-center transition-all duration-200 active:scale-95 ${
+                    isActive 
+                    ? 'bg-[#1c1a17] border-[#1c1a17] text-[#ffffff] shadow-md' 
+                    : 'bg-white border-cream-200 text-[#1c1a17] hover:border-salad-300'
+                }`;
+                button.onclick = () => {
+                    state.selectedDateStr = dateStr;
+                    taskDateInput.value = dateStr;
+                    renderAll();
+                };
+
+                const countText = dayTasks.length === 1 ? 'задача' : (dayTasks.length > 1 && dayTasks.length < 5 ? 'задачи' : 'задач');
+
+                button.innerHTML = `
+                    <div class="text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-salad-300' : 'text-cream-500'}">${dayNameShort}</div>
+                    <div class="text-xs font-bold mt-0.5">${dayNum} ${monthName}</div>
+                    <div class="text-[9px] font-medium opacity-60 mt-0.5">${dayTasks.length} ${countText}</div>
+                `;
+                dayTabs.appendChild(button);
+            }
+        }
+
+        // Render current day details card
+        function renderSelectedDay() {
+            const currentDayDate = new Date(state.selectedDateStr);
+            const formattedHeader = currentDayDate.toLocaleString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+            
+            // H2 Heading allows starting with a capital letter
+            selectedDayName.textContent = formattedHeader.charAt(0).toUpperCase() + formattedHeader.slice(1);
+
+            const dayTasks = state.tasks.filter(t => t.date === state.selectedDateStr);
+            const completedCount = dayTasks.filter(t => t.completed).length;
+
+            selectedDayStats.textContent = `${dayTasks.length} задач / ${completedCount} выполнено`;
+            selectedTasksList.innerHTML = '';
+
+            if (dayTasks.length === 0) {
+                selectedTasksList.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-12 text-center text-cream-400">
+                        <svg class="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                        <p class="text-xs font-normal">пока нет задач на этот день</p>
+                    </div>
+                `;
+                return;
+            }
+
+            dayTasks.forEach(task => {
+                const wrapper = document.createElement('div');
+                wrapper.className = `flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-200 ${
+                    task.completed 
+                    ? 'bg-salad-50/50 border-salad-200/60 hover:bg-salad-50' 
+                    : 'bg-[#efede6]/40 border-cream-200/60 hover:bg-[#efede6]/70'
+                }`;
+
+                wrapper.innerHTML = `
+                    <div class="flex items-center space-x-3 cursor-pointer select-none flex-1 min-w-0" onclick="toggleTask('${task.id}')">
+                        <!-- Custom Concentric Circles Radio Button Checkbox with Salad Accent -->
+                        <div class="w-5 h-5 rounded-full border-2 transition-all flex-shrink-0 flex items-center justify-center ${task.completed ? 'border-salad-500' : 'border-cream-300'}">
+                            ${task.completed ? '<div class="w-2.5 h-2.5 rounded-full bg-salad-500"></div>' : ''}
+                        </div>
+                        <span class="text-xs font-semibold break-words pr-2 transition-all ${task.completed ? 'line-through text-salad-600' : 'text-[#1c1a17]'}">${task.text}</span>
+                    </div>
+                    <button onclick="deleteTask('${task.id}')" class="text-cream-400 hover:text-red-500 p-1 transition-colors flex-shrink-0" title="удалить задачу">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                `;
+                selectedTasksList.appendChild(wrapper);
+            });
+        }
+
+        // Render Full overview card on the right side (Displays exactly 10 days starting from today)
+        function renderOverview() {
+            weeklyOverview.innerHTML = '';
+            
+            // Generate starting from current local day
+            const startDay = new Date();
+            startDay.setHours(0,0,0,0);
+
+            for (let i = 0; i < 10; i++) {
+                const currentDay = new Date(startDay);
+                currentDay.setDate(startDay.getDate() + i);
+                const dateStr = formatDateISO(currentDay);
+                
+                const dayTasks = state.tasks.filter(t => t.date === dateStr);
+                const completedCount = dayTasks.filter(t => t.completed).length;
+                const activeCount = dayTasks.length - completedCount;
+
+                const dayBlock = document.createElement('div');
+                dayBlock.className = 'border-b border-cream-200/60 pb-3 last:border-none last:pb-0';
+
+                let tasksHTML = '';
+                if (dayTasks.length === 0) {
+                    tasksHTML = `<p class="text-xs text-cream-400 font-normal">пока ничего не запланировано</p>`;
+                } else {
+                    tasksHTML = `<ul class="space-y-1.5 pl-1">` + 
+                        dayTasks.map(t => `
+                            <li class="flex items-start gap-2 text-xs">
+                                <span class="text-[#1c1a17]/40 mt-1 flex-shrink-0 text-[8px]">•</span>
+                                <span class="break-words transition-all ${t.completed ? 'line-through text-salad-600 font-normal' : 'text-[#1c1a17] font-medium'} cursor-pointer" onclick="selectDate('${dateStr}')">${t.text}</span>
+                            </li>
+                        `).join('') + 
+                    `</ul>`;
+                }
+
+                // Subheading H3 formatted to all lowercase as per structural specifications
+                const formattedDayHeader = currentDay.toLocaleString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' }).toLowerCase();
+
+                dayBlock.innerHTML = `
+                    <div class="flex justify-between items-baseline mb-2 cursor-pointer group" onclick="selectDate('${dateStr}')">
+                        <h3 class="text-sm font-bold text-[#1c1a17] group-hover:text-salad-500 transition-colors lowercase">${formattedDayHeader}</h3>
+                        <span class="text-[11px] text-cream-400 font-medium">${activeCount} в плане / ${completedCount} готово</span>
+                    </div>
+                    <div class="pl-0.5">
+                        ${tasksHTML}
+                    </div>
+                `;
+                weeklyOverview.appendChild(dayBlock);
+            }
+        }
+
+        // Calculate and update top statistics based on the 10-day active range
+        function renderMetrics() {
+            const startDay = new Date();
+            startDay.setHours(0,0,0,0);
+            
+            const targetDates = [];
+            for (let i = 0; i < 10; i++) {
+                const d = new Date(startDay);
+                d.setDate(startDay.getDate() + i);
+                targetDates.push(formatDateISO(d));
+            }
+            
+            const rangeTasks = state.tasks.filter(t => targetDates.includes(t.date));
+            const total = rangeTasks.length;
+            const completed = rangeTasks.filter(t => t.completed).length;
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            globalProgress.textContent = `${percent}%`;
+            globalProgressDetail.textContent = `${completed} из ${total} задач выполнено`;
+        }
+
+        // Action operations
+        window.selectDate = function(dateStr) {
+            state.selectedDateStr = dateStr;
+            taskDateInput.value = dateStr;
+            state.currentMonday = getMonday(new Date(dateStr));
+            renderAll();
+        };
+
+        window.toggleTask = function(id) {
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderAll();
+                showToast(task.completed ? 'задача выполнена!' : 'задача возвращена в работу');
+            }
+        };
+
+        window.deleteTask = function(id) {
+            state.tasks = state.tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderAll();
+            showToast('задача удалена');
+        };
+
+        // Screen switching function
+        function switchView(viewName) {
+            state.currentView = viewName;
+            if (viewName === 'planner') {
+                viewPlannerBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white";
+                viewBackupBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100";
+                screenPlanner.classList.remove('hidden');
+                screenBackup.classList.add('hidden');
+            } else {
+                viewBackupBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#1c1a17] text-white";
+                viewPlannerBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all text-[#1c1a17] hover:bg-cream-100";
+                screenPlanner.classList.add('hidden');
+                screenBackup.classList.remove('hidden');
+                
+                // Refresh export string on open
+                exportTextArea.value = JSON.stringify(state.tasks);
+            }
+        }
+
+        // Validation for import format
+        function validateImportData(parsed) {
+            if (!Array.isArray(parsed)) return false;
+            for (let item of parsed) {
+                if (typeof item !== 'object' || item === null) return false;
+                if (!item.id || typeof item.text !== 'string' || !item.date) return false;
+            }
+            return true;
+        }
+
+        // Form Submission and Navigation
+        function setupEvents() {
+            // View navigation switches
+            viewPlannerBtn.addEventListener('click', () => switchView('planner'));
+            viewBackupBtn.addEventListener('click', () => switchView('backup'));
+
+            // Week navigation click handlers
+            prevWeekBtn.addEventListener('click', () => {
+                const prevMon = new Date(state.currentMonday);
+                prevMon.setDate(prevMon.getDate() - 7);
+                state.currentMonday = prevMon;
+                
+                const prevSel = new Date(state.selectedDateStr);
+                prevSel.setDate(prevSel.getDate() - 7);
+                state.selectedDateStr = formatDateISO(prevSel);
+                taskDateInput.value = state.selectedDateStr;
+                renderAll();
+            });
+
+            nextWeekBtn.addEventListener('click', () => {
+                const nextMon = new Date(state.currentMonday);
+                nextMon.setDate(nextMon.getDate() + 7);
+                state.currentMonday = nextMon;
+                
+                const nextSel = new Date(state.selectedDateStr);
+                nextSel.setDate(nextSel.getDate() + 7);
+                state.selectedDateStr = formatDateISO(nextSel);
+                taskDateInput.value = state.selectedDateStr;
+                renderAll();
+            });
+
+            // Update state when date is selected manually in the form
+            taskDateInput.addEventListener('change', (e) => {
+                const selectedDate = new Date(e.target.value);
+                state.selectedDateStr = e.target.value;
+                state.currentMonday = getMonday(selectedDate);
+                renderAll();
+            });
+
+            taskForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = taskInput.value.trim();
+                const dateStr = taskDateInput.value;
+
+                if (text && dateStr) {
+                    const newTask = {
+                        id: 'task_' + Date.now(),
+                        text: text,
+                        date: dateStr,
+                        completed: false
+                    };
+
+                    state.tasks.push(newTask);
+                    saveTasks();
+                    
+                    state.selectedDateStr = dateStr;
+                    state.currentMonday = getMonday(new Date(dateStr));
+                    renderAll();
+                    
+                    taskInput.value = '';
+                    showToast('задача добавлена');
+                }
+            });
+
+            clearAllBtn.addEventListener('click', () => {
+                confirmDialog.classList.remove('opacity-0', 'pointer-events-none');
+                confirmDialog.querySelector('div').classList.remove('scale-95');
+            });
+
+            dialogCancel.addEventListener('click', () => {
+                confirmDialog.classList.add('opacity-0', 'pointer-events-none');
+                confirmDialog.querySelector('div').classList.add('scale-95');
+            });
+
+            dialogConfirm.addEventListener('click', () => {
+                state.tasks = [];
+                saveTasks();
+                renderAll();
+                confirmDialog.classList.add('opacity-0', 'pointer-events-none');
+                confirmDialog.querySelector('div').classList.add('scale-95');
+                showToast('все ваши задачи удалены');
+            });
+
+            // DATA BACKUP & RESTORE ACTIONS
+            // 1. Export JSON File Download
+            exportFileBtn.addEventListener('click', () => {
+                try {
+                    const dataStr = JSON.stringify(state.tasks, null, 2);
+                    const blob = new Blob([dataStr], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `planner_backup_${formatDateISO(new Date())}.json`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    
+                    showToast('файл резервной копии скачан');
+                } catch (err) {
+                    showToast('ошибка генерации файла');
+                }
+            });
+
+            // 2. Copy Text Key to Clipboard
+            copyTextBtn.addEventListener('click', () => {
+                exportTextArea.select();
+                try {
+                    const success = document.execCommand('copy');
+                    if (success) {
+                        showToast('текстовый ключ скопирован');
+                    } else {
+                        showToast('не удалось скопировать');
+                    }
+                } catch (err) {
+                    showToast('ошибка копирования');
+                }
+            });
+
+            // 3. Import JSON File from device
+            importFileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    try {
+                        const parsed = JSON.parse(evt.target.result);
+                        if (validateImportData(parsed)) {
+                            state.tasks = parsed;
+                            saveTasks();
+                            renderAll();
+                            showToast('данные успешно импортированы из файла');
+                            importFileInput.value = ''; // Reset input
+                            
+                            // switch back to planner screen to see imported results
+                            setTimeout(() => switchView('planner'), 800);
+                        } else {
+                            showToast('ошибка: неверный формат резервного файла');
+                        }
+                    } catch (err) {
+                        showToast('ошибка чтения структуры файла');
+                    }
+                };
+                reader.readAsText(file);
+            });
+
+            // 4. Import from Text Area Key input
+            importTextBtn.addEventListener('click', () => {
+                const textInput = importTextArea.value.trim();
+                if (!textInput) {
+                    showToast('сначала вставьте текстовый ключ');
+                    return;
+                }
+
+                try {
+                    const parsed = JSON.parse(textInput);
+                    if (validateImportData(parsed)) {
+                        state.tasks = parsed;
+                        saveTasks();
+                        renderAll();
+                        showToast('данные успешно восстановлены из ключа');
+                        importTextArea.value = ''; // Reset
+                        
+                        // switch back to planner screen
+                        setTimeout(() => switchView('planner'), 800);
+                    } else {
+                        showToast('ошибка: некорректная структура ключа');
+                    }
+                } catch (err) {
+                    showToast('ошибка: не удалось расшифровать ключ');
+                }
+            });
+        }
+
+        // Service Worker setup for robust offline functionality on GitHub Pages
+        function registerPWA() {
+            if ('serviceWorker' in navigator) {
+                const currentPath = location.pathname;
+                const swCode = `
+                    const CACHE_NAME = 'planner-cache-v2';
+                    const ASSETS = [
+                        '${currentPath}',
+                        'https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap',
+                        'https://cdn.tailwindcss.com'
+                    ];
+
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(
+                            caches.open(CACHE_NAME).then((cache) => {
+                                return cache.addAll(ASSETS).catch(() => {});
+                            })
+                        );
+                    });
+
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(
+                            caches.match(e.request).then((cachedResponse) => {
+                                if (cachedResponse) {
+                                    return cachedResponse;
+                                }
+                                return fetch(e.request).then((networkResponse) => {
+                                    return networkResponse;
+                                }).catch(() => {
+                                    return new Response('offline mode active');
+                                });
+                            })
+                        );
+                    });
+                `;
+
+                try {
+                    const blob = new Blob([swCode], { type: 'application/javascript' });
+                    const swUrl = URL.createObjectURL(blob);
+                    
+                    navigator.serviceWorker.register(swUrl).catch((err) => {
+                        console.log('sw registration deferred: running in localized frame.');
+                    });
+                } catch (e) {
+                    console.log('pwa offline registration deferred.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
