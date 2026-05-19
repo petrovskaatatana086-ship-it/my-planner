@@ -75,18 +75,27 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Custom styling for native date input to match the minimalist theme */
+        /* Custom styling for native date input to match the minimalist theme and prevent Safari offsets */
+        input[type="date"] {
+            position: relative;
+            -webkit-appearance: none;
+            appearance: none;
+        }
         input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
             position: absolute;
-            right: 0;
             top: 0;
-            width: auto;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+        /* Reset internal webkit spin and clear buttons that cause ugly offsets on iOS */
+        input[type="date"]::-webkit-inner-spin-button,
+        input[type="date"]::-webkit-clear-button {
+            -webkit-appearance: none;
+            display: none;
         }
         /* Blinking animation for offline status dot and active microphone */
         @keyframes pulse-dot {
@@ -299,7 +308,7 @@
         </div>
     </div>
 
-    <!-- Reschedule Task Dialog (Redesigned with vertical stacking to fit perfectly on any phone) -->
+    <!-- Reschedule Task Dialog (Redesigned with vertical stacking and clean input style resets to fit perfectly on any phone) -->
     <div id="reschedule-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
         <div class="bg-white p-5 sm:p-6 rounded-[2rem] max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200 flex flex-col items-stretch text-center">
             <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">перенести задачу</h3>
@@ -870,6 +879,7 @@
                 renderAll();
             });
 
+            // Next week navigation click handler
             nextWeekBtn.addEventListener('click', () => {
                 const nextMon = new Date(state.currentMonday);
                 nextMon.setDate(nextMon.getDate() + 7);
