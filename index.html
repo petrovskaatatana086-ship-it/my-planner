@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23efede6'/><circle cx='256' cy='256' r='160' fill='%23e3f3d8' stroke='%235ebb37' stroke-width='24'/><circle cx='256' cy='256' r='60' fill='%231c1a17'/></svg>">
 
     <!-- Inline Web App Manifest with the embedded SVG launcher icon inside -->
-    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%20%D0%BD%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E%22%2C%22short_name%22%3A%22%D0%9F%D0%BB%D0%B0%D0%BD%D0%B5%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23efede6%22%2C%22theme_color%22%3A%22%231c1a17%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org/2000/svg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23efede6%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%27160%27%20fill%3D%27%23e3f3d8%27%20stroke%3D%27%235ebb37%27%20stroke-width%3D%2724%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%2760%27%20fill%3D%27%231c1a17%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%20%D0%BD%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E%22%2C%22short_name%22%3A%22%D0%9F%D0%BB%D0%B0%D0%BD%D0%B5%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23efede6%22%2C%22theme_color%22%3A%22%231c1a17%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org/2000/svg%27%20viewBox%20%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23efede6%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%27160%27%20fill%3D%27%23e3f3d8%27%20stroke%3D%27%235ebb37%27%20stroke-width%3D%2724%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%2760%27%20fill%3D%27%231c1a17%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
     <!-- Tailwind CSS Pre-configuration to prevent race conditions on loading -->
     <script>
@@ -98,53 +98,53 @@
         }
     </style>
 </head>
-<body class="text-[#1c1a17] min-h-screen pb-32 antialiased">
+<body class="text-[#1c1a17] min-h-screen pb-28 sm:pb-32 antialiased">
 
     <!-- App Wrapper Container -->
-    <div class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
+    <div class="max-w-2xl mx-auto px-4 pt-4 sm:pt-10 space-y-4 sm:space-y-6">
         
         <!-- Header & Progress Section -->
-        <header class="bg-white/40 p-5 rounded-[2rem] border border-cream-200 backdrop-blur-sm flex justify-between items-center">
+        <header class="bg-white/40 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 backdrop-blur-sm flex justify-between items-center">
             <div class="space-y-0.5">
-                <span class="text-[10px] font-bold tracking-widest text-salad-600 uppercase">weekly planner</span>
-                <h1 id="app-title-header" class="text-xl font-extrabold text-[#1c1a17]">Список задач на неделю</h1>
+                <span class="text-[9px] sm:text-[10px] font-bold tracking-widest text-salad-600 uppercase">weekly planner</span>
+                <h1 id="app-title-header" class="text-lg sm:text-xl font-extrabold text-[#1c1a17]">Список задач на неделю</h1>
             </div>
             
             <!-- Progress Card -->
-            <div class="bg-white py-1.5 px-3 rounded-full border border-cream-200 flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-salad-500 pulse-salad-dot"></span>
-                <span id="global-progress" class="text-xs font-bold text-[#1c1a17]">0%</span>
+            <div class="bg-white py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full border border-cream-200 flex items-center gap-1.5">
+                <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-salad-500 pulse-salad-dot"></span>
+                <span id="global-progress" class="text-[11px] sm:text-xs font-bold text-[#1c1a17]">0%</span>
             </div>
         </header>
 
         <!-- Dynamic Screen Content Area -->
-        <main id="main-content-area" class="space-y-6">
+        <main id="main-content-area" class="space-y-4 sm:space-y-6">
 
             <!-- SCREEN 1: Planner Workspace -->
-            <div id="screen-planner" class="space-y-6">
+            <div id="screen-planner" class="space-y-4 sm:space-y-6">
                 <!-- Quick Add Form Card -->
-                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm">
-                    <form id="task-form" class="space-y-4">
-                        <div class="flex flex-col space-y-1.5">
-                            <label class="text-[10px] font-bold tracking-wider text-cream-500 uppercase">новая задача</label>
+                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm">
+                    <form id="task-form" class="space-y-3 sm:space-y-4">
+                        <div class="flex flex-col space-y-1">
+                            <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-500 uppercase">новая задача</label>
                             <div class="relative flex items-center">
-                                <input id="task-input" type="text" placeholder="изучить нейросети..." required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl pl-4 pr-12 py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
-                                <button type="button" id="mic-btn" class="absolute right-3.5 p-1.5 text-cream-400 hover:text-salad-500 active:scale-95 transition-all flex items-center justify-center" title="надиктовать задачу">
-                                    <svg id="mic-icon" class="w-5 h-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <input id="task-input" type="text" placeholder="изучить нейросети..." required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl pl-3.5 pr-11 py-2.5 sm:py-3 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
+                                <button type="button" id="mic-btn" class="absolute right-3 p-1.5 text-cream-400 hover:text-salad-500 active:scale-95 transition-all flex items-center justify-center" title="надиктовать задачу">
+                                    <svg id="mic-icon" class="w-4 h-4 sm:w-5 sm:h-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
                                     </svg>
                                 </button>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col space-y-1.5 relative">
-                                <label class="text-[10px] font-bold tracking-wider text-cream-500 uppercase">дата выполнения</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                            <div class="flex flex-col space-y-1 relative">
+                                <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-500 uppercase">дата выполнения</label>
                                 <div class="relative">
-                                    <input id="task-date" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
+                                    <input id="task-date" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl px-3.5 py-2 sm:py-2.5 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
                                 </div>
                             </div>
                             <div class="flex items-end">
-                                <button type="submit" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-sm font-semibold rounded-xl py-2.5 transition-all duration-200 shadow-sm">
+                                <button type="submit" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs sm:text-sm font-semibold rounded-xl py-2 sm:py-2.5 transition-all duration-200 shadow-sm">
                                     добавить задачу
                                 </button>
                             </div>
@@ -153,44 +153,44 @@
                 </section>
 
                 <!-- Horizontal Days Selector Row with Week Navigators -->
-                <div class="flex items-center gap-2">
-                    <button id="prev-week" class="p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="предыдущая неделя">
-                        <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button id="prev-week" class="p-2.5 sm:p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="предыдущая неделя">
+                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
                     
-                    <nav class="flex-1 flex gap-2.5 overflow-x-auto pb-1 no-scrollbar" id="day-tabs">
+                    <nav class="flex-1 flex gap-1.5 sm:gap-2.5 overflow-x-auto pb-1 no-scrollbar" id="day-tabs">
                         <!-- Programmatically rendered tabs -->
                     </nav>
 
-                    <button id="next-week" class="p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="следующая неделя">
-                        <svg class="w-4 h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="next-week" class="p-2.5 sm:p-3 bg-white border border-cream-200 rounded-xl hover:bg-salad-50 active:scale-95 transition-all flex-shrink-0" title="следующая неделя">
+                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1c1a17]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
                 </div>
 
                 <!-- Selected Day Interactive List -->
-                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm flex flex-col justify-between min-h-[350px]">
-                    <div class="space-y-4">
-                        <div class="border-b border-cream-100 pb-3">
-                            <span class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">на выбранный день</span>
-                            <div class="flex justify-between items-baseline mt-1">
-                                <h2 class="text-xl font-extrabold text-[#1c1a17] capitalize" id="selected-day-name">понедельник</h2>
-                                <span class="text-xs text-cream-400" id="selected-day-stats">0 задач / 0 в плане</span>
+                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="border-b border-cream-100 pb-2 sm:pb-3">
+                            <span class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-400 uppercase">на выбранный день</span>
+                            <div class="flex justify-between items-baseline mt-0.5 sm:mt-1">
+                                <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] capitalize" id="selected-day-name">понедельник</h2>
+                                <span class="text-[11px] sm:text-xs text-cream-400" id="selected-day-stats">0 задач / 0 в плане</span>
                             </div>
                         </div>
 
-                        <!-- Selected Day Tasks Container -->
-                        <div class="space-y-2.5 max-h-[280px] overflow-y-auto no-scrollbar" id="selected-tasks-list">
-                            <!-- Dynamic list of tasks -->
+                        <!-- Selected Day Tasks Container (Optimized for mobile scroll) -->
+                        <div class="space-y-2 max-h-[35vh] sm:max-h-[300px] overflow-y-auto no-scrollbar" id="selected-tasks-list">
+                            <!-- Dynamic list of tasks with adaptive font size logic -->
                         </div>
                     </div>
                     
-                    <div class="pt-3 border-t border-cream-100 mt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-                        <span class="text-[10px] text-cream-400 font-normal">все данные надежно хранятся в памяти устройства</span>
-                        <button id="clear-all" class="text-xs font-medium text-red-500 hover:text-red-600 transition-colors">
+                    <div class="pt-2.5 border-t border-cream-100 mt-3 sm:mt-4 flex flex-row justify-between items-center gap-2">
+                        <span class="text-[9px] sm:text-[10px] text-cream-400 font-normal">все данные надежно хранятся в памяти устройства</span>
+                        <button id="clear-all" class="text-[10px] sm:text-xs font-medium text-red-500 hover:text-red-600 transition-colors">
                             очистить все
                         </button>
                     </div>
@@ -199,16 +199,16 @@
 
 
             <!-- SCREEN 2: 10 Days Planned Overview -->
-            <div id="screen-overview" class="hidden space-y-6">
+            <div id="screen-overview" class="hidden space-y-4 sm:space-y-6">
                 <!-- Full Weekly Overview -->
-                <section class="bg-white p-5 sm:p-6 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
-                    <div class="flex items-baseline justify-between border-b border-cream-100 pb-3">
+                <section class="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm space-y-3 sm:space-y-4">
+                    <div class="flex items-baseline justify-between border-b border-cream-100 pb-2 sm:pb-3">
                         <span class="text-xs font-bold tracking-wider text-cream-400 uppercase">обзор на 10 дней</span>
-                        <h2 class="text-xl font-extrabold text-[#1c1a17]">Запланировано</h2>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17]">Запланировано</h2>
                     </div>
 
                     <!-- Days Overview Container -->
-                    <div class="space-y-5 max-h-[520px] overflow-y-auto no-scrollbar pr-1" id="weekly-overview">
+                    <div class="space-y-4 sm:space-y-5 max-h-[50vh] sm:max-h-[520px] overflow-y-auto no-scrollbar pr-1" id="weekly-overview">
                         <!-- Dynamic overview lists -->
                     </div>
                 </section>
@@ -216,25 +216,25 @@
 
 
             <!-- SCREEN 3: Backup & Restore Manager -->
-            <div id="screen-backup" class="hidden space-y-6">
+            <div id="screen-backup" class="hidden space-y-4 sm:space-y-6">
                 <!-- Export Box -->
-                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
-                    <div class="border-b border-cream-100 pb-3">
+                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm space-y-3 sm:space-y-4">
+                    <div class="border-b border-cream-100 pb-2 sm:pb-3">
                         <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
-                        <h2 class="text-xl font-extrabold text-[#1c1a17] mt-0.5">Резервная копия</h2>
-                        <p class="text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Резервная копия</h2>
+                        <p class="text-[11px] sm:text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
                     </div>
 
-                    <div class="space-y-3">
-                        <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <div class="space-y-2.5 sm:space-y-3">
+                        <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-2.5 sm:py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             скачать файл резервной копии
                         </button>
 
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
-                            <textarea id="export-text-area" readonly class="w-full h-20 bg-[#efede6]/40 border border-cream-200 rounded-xl p-3 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
-                            <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2 px-4 rounded-xl transition-all">
+                        <div class="space-y-1">
+                            <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
+                            <textarea id="export-text-area" readonly class="w-full h-16 sm:h-20 bg-[#efede6]/40 border border-cream-200 rounded-xl p-2.5 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
+                            <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2 sm:py-2.5 px-4 rounded-xl transition-all">
                                 скопировать текстовый ключ
                             </button>
                         </div>
@@ -242,28 +242,28 @@
                 </section>
 
                 <!-- Import Box -->
-                <section class="bg-white p-5 rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
-                    <div class="border-b border-cream-100 pb-3">
+                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
+                    <div class="border-b border-cream-100 pb-2 sm:pb-3">
                         <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
-                        <h2 class="text-xl font-extrabold text-[#1c1a17] mt-0.5">Импорт планов</h2>
-                        <p class="text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Импорт планов</h2>
+                        <p class="text-[11px] sm:text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
                     </div>
 
                     <div class="space-y-3">
                         <!-- File upload -->
-                        <div class="border-2 border-dashed border-cream-300 rounded-xl p-3 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
+                        <div class="border-2 border-dashed border-cream-300 rounded-xl p-2.5 sm:p-3 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
                             <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                             <div class="space-y-0.5 pointer-events-none">
-                                <svg class="w-5 h-5 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                                 <p class="text-xs font-semibold text-[#1c1a17]">выберите файл .json</p>
                             </div>
                         </div>
 
                         <!-- Text restore -->
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
-                            <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-20 bg-[#efede6]/20 border border-cream-200 rounded-xl p-3 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
-                            <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-white text-xs font-bold py-2 px-4 rounded-xl transition-all">
+                        <div class="space-y-1">
+                            <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
+                            <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-16 sm:h-20 bg-[#efede6]/20 border border-cream-200 rounded-xl p-2.5 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
+                            <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-2 sm:py-2.5 px-4 rounded-xl transition-all">
                                 восстановить по ключу
                             </button>
                         </div>
@@ -277,24 +277,39 @@
     <!-- Bottom Floating Navigation Bar (Matches active style from image_ec448c.png precisely) -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md p-1 rounded-2xl border border-cream-200 shadow-md flex justify-around items-center max-w-[95vw] w-full sm:max-w-md">
         <button onclick="switchView('planner')" id="tab-planner" class="flex-1 py-3 text-center transition-all duration-200">
-            <span class="text-xs font-extrabold tracking-wider uppercase text-accent" id="label-planner">планер</span>
+            <span class="text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-accent" id="label-planner">планер</span>
         </button>
         <button onclick="switchView('overview')" id="tab-overview" class="flex-1 py-3 text-center transition-all duration-200">
-            <span class="text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-overview">обзор</span>
+            <span class="text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-overview">обзор</span>
         </button>
         <button onclick="switchView('backup')" id="tab-backup" class="flex-1 py-3 text-center transition-all duration-200">
-            <span class="text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-backup">бэкап</span>
+            <span class="text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]" id="label-backup">бэкап</span>
         </button>
     </div>
 
     <!-- Soft Confirmation Dialog -->
     <div id="confirm-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
-        <div class="bg-white p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
-            <h3 class="font-bold text-lg text-[#1c1a17] lowercase">удалить все задачи?</h3>
+        <div class="bg-white p-5 sm:p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
+            <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">удалить все задачи?</h3>
             <p class="text-xs text-cream-500 leading-relaxed">это действие полностью очистит вашу историю задач, восстановить планы невозможно.</p>
-            <div class="flex gap-2.5 justify-end">
+            <div class="flex gap-2 justify-end">
                 <button id="dialog-cancel" class="px-4 py-2 text-xs font-semibold rounded-xl bg-cream-100 hover:bg-cream-200 text-cream-500 transition-all">отмена</button>
-                <button id="dialog-confirm" class="px-4 py-2 text-xs font-semibold text-white rounded-xl bg-red-500 hover:bg-red-600 transition-all">удалить все</button>
+                <button id="dialog-confirm" class="px-4 py-2 text-xs font-semibold text-[#ffffff] rounded-xl bg-red-500 hover:bg-red-600 transition-all">удалить все</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reschedule Task Dialog -->
+    <div id="reschedule-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
+        <div class="bg-white p-5 sm:p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
+            <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">перенести задачу</h3>
+            <p class="text-xs text-cream-500 leading-relaxed">выберите новую дату, на которую хотите перенести эту задачу:</p>
+            <div class="relative">
+                <input id="reschedule-date-input" type="date" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all cursor-pointer">
+            </div>
+            <div class="flex gap-2 justify-end">
+                <button id="reschedule-cancel" class="px-4 py-2 text-xs font-semibold rounded-xl bg-cream-100 hover:bg-cream-200 text-cream-500 transition-all">отмена</button>
+                <button id="reschedule-confirm" class="px-4 py-2 text-xs font-semibold text-[#ffffff] rounded-xl bg-accent hover:bg-accent/80 transition-all">перенести</button>
             </div>
         </div>
     </div>
@@ -351,6 +366,13 @@
         const micIcon = document.getElementById('mic-icon');
         let recognition = null;
         let isListening = false;
+
+        // Reschedule Task Elements
+        const rescheduleDialog = document.getElementById('reschedule-dialog');
+        const rescheduleDateInput = document.getElementById('reschedule-date-input');
+        const rescheduleCancel = document.getElementById('reschedule-cancel');
+        const rescheduleConfirm = document.getElementById('reschedule-confirm');
+        let activeRescheduleTaskId = null;
 
         // Backup DOM elements
         const exportTextArea = document.getElementById('export-text-area');
@@ -488,7 +510,7 @@
                 
                 const button = document.createElement('button');
                 button.type = 'button';
-                button.className = `flex-1 min-w-[76px] py-2.5 px-1.5 rounded-2xl border text-center transition-all duration-200 active:scale-95 ${
+                button.className = `flex-1 min-w-[62px] sm:min-w-[76px] py-2 px-1 sm:py-2.5 sm:px-1.5 rounded-2xl border text-center transition-all duration-200 active:scale-95 ${
                     isActive 
                     ? 'bg-[#1c1a17] border-[#1c1a17] text-[#ffffff] shadow-md' 
                     : 'bg-white border-cream-200 text-[#1c1a17] hover:border-salad-300'
@@ -502,15 +524,15 @@
                 const countText = dayTasks.length === 1 ? 'задача' : (dayTasks.length > 1 && dayTasks.length < 5 ? 'задачи' : 'задач');
 
                 button.innerHTML = `
-                    <div class="text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-salad-300' : 'text-cream-500'}">${dayNameShort}</div>
+                    <div class="text-[9px] sm:text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-salad-300' : 'text-cream-500'}">${dayNameShort}</div>
                     <div class="text-xs font-bold mt-0.5">${dayNum} ${monthName}</div>
-                    <div class="text-[9px] font-medium opacity-60 mt-0.5">${dayTasks.length} ${countText}</div>
+                    <div class="text-[8px] sm:text-[9px] font-medium opacity-60 mt-0.5">${dayTasks.length} ${countText}</div>
                 `;
                 dayTabs.appendChild(button);
             }
         }
 
-        // Render current day details card
+        // Render current day details card with adaptive scaling layout (With strict Mobile Phone optimization)
         function renderSelectedDay() {
             const currentDayDate = new Date(state.selectedDateStr);
             const formattedHeader = currentDayDate.toLocaleString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -526,8 +548,8 @@
 
             if (dayTasks.length === 0) {
                 selectedTasksList.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-12 text-center text-cream-400">
-                        <svg class="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex flex-col items-center justify-center py-10 sm:py-12 text-center text-cream-400">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                         </svg>
                         <p class="text-xs font-normal">пока нет задач на этот день</p>
@@ -536,25 +558,68 @@
                 return;
             }
 
+            // Adaptive font and spacing configurations based on task density AND viewport width (isMobile check)
+            const count = dayTasks.length;
+            const isMobile = window.innerWidth < 640;
+
+            let sizeClass = 'text-xs';
+            let paddingClass = 'p-3';
+            let iconSizeClass = 'w-4 h-4';
+            let checkboxSizeClass = 'w-5 h-5';
+            let innerDotSizeClass = 'w-2.5 h-2.5';
+
+            if (count <= 3) {
+                sizeClass = isMobile ? 'text-xs font-semibold' : 'text-sm font-semibold';
+                paddingClass = isMobile ? 'p-2.5 sm:p-3' : 'p-4';
+                iconSizeClass = 'w-4 h-4';
+                checkboxSizeClass = 'w-5 h-5';
+                innerDotSizeClass = 'w-2.5 h-2.5';
+            } else if (count <= 5) {
+                sizeClass = isMobile ? 'text-[11px] font-medium leading-snug' : 'text-xs font-semibold';
+                paddingClass = isMobile ? 'p-2' : 'p-3';
+                iconSizeClass = 'w-3.5 h-3.5';
+                checkboxSizeClass = 'w-4.5 h-4.5';
+                innerDotSizeClass = 'w-2 h-2';
+            } else if (count <= 7) {
+                sizeClass = isMobile ? 'text-[10px] font-medium leading-tight' : 'text-[11px] font-medium';
+                paddingClass = isMobile ? 'p-1.5' : 'p-2.5';
+                iconSizeClass = 'w-3 h-3';
+                checkboxSizeClass = 'w-4 h-4';
+                innerDotSizeClass = 'w-1.5 h-1.5';
+            } else {
+                // Highly compressed layouts for 8 or more items to prevent scrolling entirely on mobile screen
+                sizeClass = isMobile ? 'text-[9px] font-medium leading-none' : 'text-[10px] font-medium leading-tight';
+                paddingClass = isMobile ? 'p-1' : 'p-2';
+                checkboxSizeClass = 'w-3.5 h-3.5';
+                innerDotSizeClass = 'w-1 h-1';
+                iconSizeClass = 'w-2.5 h-2.5';
+            }
+
             dayTasks.forEach(task => {
                 const wrapper = document.createElement('div');
-                wrapper.className = `flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-200 ${
+                wrapper.className = `flex items-center justify-between ${paddingClass} rounded-xl border transition-all duration-200 ${
                     task.completed 
                     ? 'bg-salad-50/50 border-salad-200/60 hover:bg-salad-50' 
                     : 'bg-[#efede6]/40 border-cream-200/60 hover:bg-[#efede6]/70'
                 }`;
 
                 wrapper.innerHTML = `
-                    <div class="flex items-center space-x-3 cursor-pointer select-none flex-1 min-w-0" onclick="toggleTask('${task.id}')">
-                        <!-- Custom Concentric Circles Radio Button Checkbox with Salad Accent -->
-                        <div class="w-5 h-5 rounded-full border-2 transition-all flex-shrink-0 flex items-center justify-center ${task.completed ? 'border-salad-500' : 'border-cream-300'}">
-                            ${task.completed ? '<div class="w-2.5 h-2.5 rounded-full bg-salad-500"></div>' : ''}
+                    <div class="flex items-center space-x-2.5 cursor-pointer select-none flex-1 min-w-0" onclick="toggleTask('${task.id}')">
+                        <!-- Adaptive Concentric Circles Checkbox -->
+                        <div class="${checkboxSizeClass} rounded-full border-2 transition-all flex-shrink-0 flex items-center justify-center ${task.completed ? 'border-salad-500' : 'border-cream-300'}">
+                            ${task.completed ? `<div class="${innerDotSizeClass} rounded-full bg-salad-500"></div>` : ''}
                         </div>
-                        <span class="text-xs font-semibold break-words pr-2 transition-all ${task.completed ? 'line-through text-salad-600' : 'text-[#1c1a17]'}">${task.text}</span>
+                        <span class="${sizeClass} break-words pr-2 transition-all ${task.completed ? 'line-through text-salad-600' : 'text-[#1c1a17]'}">${task.text}</span>
                     </div>
-                    <button onclick="deleteTask('${task.id}')" class="text-cream-400 hover:text-red-500 p-1 transition-colors flex-shrink-0" title="удалить задачу">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
+                    <div class="flex items-center space-x-1 flex-shrink-0">
+                        <!-- Adaptive icon buttons -->
+                        <button onclick="openRescheduleModal('${task.id}')" class="text-cream-400 hover:text-accent p-1 transition-colors" title="перенести задачу">
+                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <button onclick="deleteTask('${task.id}')" class="text-cream-400 hover:text-red-500 p-1 transition-colors flex-shrink-0" title="удалить задачу">
+                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
                 `;
                 selectedTasksList.appendChild(wrapper);
             });
@@ -578,15 +643,15 @@
                 const activeCount = dayTasks.length - completedCount;
 
                 const dayBlock = document.createElement('div');
-                dayBlock.className = 'border-b border-cream-200/60 pb-3 last:border-none last:pb-0';
+                dayBlock.className = 'border-b border-cream-200/60 pb-2.5 sm:pb-3 last:border-none last:pb-0';
 
                 let tasksHTML = '';
                 if (dayTasks.length === 0) {
                     tasksHTML = `<p class="text-xs text-cream-400 font-normal">пока ничего не запланировано</p>`;
                 } else {
-                    tasksHTML = `<ul class="space-y-1.5 pl-1">` + 
+                    tasksHTML = `<ul class="space-y-1 sm:space-y-1.5 pl-1">` + 
                         dayTasks.map(t => `
-                            <li class="flex items-start gap-2 text-xs">
+                            <li class="flex items-start gap-1.5 sm:gap-2 text-xs">
                                 <span class="text-[#1c1a17]/40 mt-1 flex-shrink-0 text-[8px]">•</span>
                                 <span class="break-words transition-all ${t.completed ? 'line-through text-salad-600 font-normal' : 'text-[#1c1a17] font-medium'} cursor-pointer" onclick="selectDate('${dateStr}')">${t.text}</span>
                             </li>
@@ -598,9 +663,9 @@
                 const formattedDayHeader = currentDay.toLocaleString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' }).toLowerCase();
 
                 dayBlock.innerHTML = `
-                    <div class="flex justify-between items-baseline mb-2 cursor-pointer group" onclick="selectDate('${dateStr}')">
-                        <h3 class="text-sm font-bold text-[#1c1a17] group-hover:text-salad-500 transition-colors lowercase">${formattedDayHeader}</h3>
-                        <span class="text-[11px] text-cream-400 font-medium">${activeCount} в плане / ${completedCount} готово</span>
+                    <div class="flex justify-between items-baseline mb-1.5 sm:mb-2 cursor-pointer group" onclick="selectDate('${dateStr}')">
+                        <h3 class="text-xs sm:text-sm font-bold text-[#1c1a17] group-hover:text-salad-500 transition-colors lowercase">${formattedDayHeader}</h3>
+                        <span class="text-[10px] sm:text-[11px] text-cream-400 font-medium">${activeCount} в плане / ${completedCount} готово</span>
                     </div>
                     <div class="pl-0.5">
                         ${tasksHTML}
@@ -659,27 +724,38 @@
             showToast('задача удалена');
         };
 
+        // Open Dialog to Reschedule Task
+        window.openRescheduleModal = function(id) {
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+                activeRescheduleTaskId = id;
+                rescheduleDateInput.value = task.date;
+                rescheduleDialog.classList.remove('opacity-0', 'pointer-events-none');
+                rescheduleDialog.querySelector('div').classList.remove('scale-95');
+            }
+        };
+
         // Screen switching function
         function switchView(viewName) {
             state.currentView = viewName;
             
-            // Reset active classes on tab labels matching style in image_ec448c.png
-            document.getElementById('label-planner').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
-            document.getElementById('label-overview').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
-            document.getElementById('label-backup').className = "text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            // Reset active classes on tab labels matching style in image_ec448c.png precisely
+            document.getElementById('label-planner').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            document.getElementById('label-overview').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
+            document.getElementById('label-backup').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-[#1c1a17]/50 hover:text-[#1c1a17]";
             
             screenPlanner.classList.add('hidden');
             screenOverview.classList.add('hidden');
             screenBackup.classList.add('hidden');
             
             if (viewName === 'planner') {
-                document.getElementById('label-planner').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
+                document.getElementById('label-planner').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenPlanner.classList.remove('hidden');
             } else if (viewName === 'overview') {
-                document.getElementById('label-overview').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
+                document.getElementById('label-overview').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenOverview.classList.remove('hidden');
             } else if (viewName === 'backup') {
-                document.getElementById('label-backup').className = "text-xs font-extrabold tracking-wider uppercase text-accent";
+                document.getElementById('label-backup').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenBackup.classList.remove('hidden');
                 
                 // Refresh export string on open
@@ -772,6 +848,11 @@
             // Restore default view switcher states
             switchView('planner');
 
+            // Handle responsive adjustments dynamically on window resize
+            window.addEventListener('resize', () => {
+                renderSelectedDay();
+            });
+
             // Week navigation click handlers
             prevWeekBtn.addEventListener('click', () => {
                 const prevMon = new Date(state.currentMonday);
@@ -847,6 +928,29 @@
                 confirmDialog.classList.add('opacity-0', 'pointer-events-none');
                 confirmDialog.querySelector('div').classList.add('scale-95');
                 showToast('все ваши задачи удалены');
+            });
+
+            // Reschedule events
+            rescheduleCancel.addEventListener('click', () => {
+                rescheduleDialog.classList.add('opacity-0', 'pointer-events-none');
+                rescheduleDialog.querySelector('div').classList.add('scale-95');
+                activeRescheduleTaskId = null;
+            });
+
+            rescheduleConfirm.addEventListener('click', () => {
+                const newDate = rescheduleDateInput.value;
+                if (newDate && activeRescheduleTaskId) {
+                    const task = state.tasks.find(t => t.id === activeRescheduleTaskId);
+                    if (task) {
+                        task.date = newDate;
+                        saveTasks();
+                        renderAll();
+                        showToast('задача успешно перенесена');
+                    }
+                    rescheduleDialog.classList.add('opacity-0', 'pointer-events-none');
+                    rescheduleDialog.querySelector('div').classList.add('scale-95');
+                    activeRescheduleTaskId = null;
+                }
             });
 
             // DATA BACKUP & RESTORE ACTIONS
