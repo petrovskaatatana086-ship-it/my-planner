@@ -449,11 +449,14 @@
             return adjustedDate.toISOString().split('T')[0];
         }
 
-        // Safe Storage handling with migration for old indices and pre-filled mock tasks
+        // Safe Storage handling with migration and version-seeding for GitHub Pages stability
         function initStorage() {
             try {
                 const stored = localStorage.getItem('weekly_tasks_pwa');
-                if (stored) {
+                const demoSeeded = localStorage.getItem('planner_demo_seeded_v1');
+                
+                // If there are stored tasks and the demo version 1 has already been initialized
+                if (stored && demoSeeded) {
                     state.tasks = JSON.parse(stored);
                     
                     // Migrate old index-based tasks to real ISO date strings of the current week
@@ -514,6 +517,7 @@
                         // Day plus 3
                         { id: 'mock_10', text: 'сдать зимние вещи в бережную химчистку', date: borderPlus3Str, completed: false }
                     ];
+                    localStorage.setItem('planner_demo_seeded_v1', 'true');
                     saveTasks();
                 }
             } catch (err) {
