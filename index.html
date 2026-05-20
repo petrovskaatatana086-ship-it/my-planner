@@ -449,7 +449,7 @@
             return adjustedDate.toISOString().split('T')[0];
         }
 
-        // Safe Storage handling with migration for old indices
+        // Safe Storage handling with migration for old indices and pre-filled mock tasks
         function initStorage() {
             try {
                 const stored = localStorage.getItem('weekly_tasks_pwa');
@@ -472,14 +472,47 @@
                         saveTasks();
                     }
                 } else {
-                    const todayStr = formatDateISO(new Date());
-                    const tomorrow = new Date();
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    const tomorrowStr = formatDateISO(tomorrow);
+                    const today = new Date();
                     
+                    const yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
+                    
+                    const tomorrow = new Date();
+                    tomorrow.setDate(today.getDate() + 1);
+                    
+                    const dayPlus2 = new Date();
+                    dayPlus2.setDate(today.getDate() + 2);
+                    
+                    const dayPlus3 = new Date();
+                    dayPlus3.setDate(today.getDate() + 3);
+
+                    const yesterdayStr = formatDateISO(yesterday);
+                    const todayStr = formatDateISO(today);
+                    const tomorrowStr = formatDateISO(tomorrow);
+                    const dayPlus2Str = formatDateISO(dayPlus2);
+                    const borderPlus3Str = formatDateISO(dayPlus3);
+
+                    // Pre-populate with beautiful, realistic, Russia-optimized tasks on initial load
                     state.tasks = [
-                        { id: '1', text: 'изучить нейросети и внедрить планировщик', date: todayStr, completed: false },
-                        { id: '2', text: 'сделать утреннюю разминку', date: tomorrowStr, completed: true }
+                        // Yesterday
+                        { id: 'mock_1', text: 'купить свежие овощи и сезонные фрукты', date: yesterdayStr, completed: true },
+                        { id: 'mock_2', text: 'сделать вечернюю кардио тренировку на улице', date: yesterdayStr, completed: true },
+                        
+                        // Today
+                        { id: 'mock_3', text: 'настроить автодеплой на гитхаб пейджес', date: todayStr, completed: false },
+                        { id: 'mock_4', text: 'полить домашние цветы в гостиной', date: todayStr, completed: true },
+                        { id: 'mock_5', text: 'подготовить отчет по аналитике проекта', date: todayStr, completed: false },
+                        { id: 'mock_6', text: 'разобрать входящие сообщения на рабочей почте', date: todayStr, completed: false },
+                        
+                        // Tomorrow
+                        { id: 'mock_7', text: 'прочитать главу книги по дизайну интерфейсов', date: tomorrowStr, completed: false },
+                        { id: 'mock_8', text: 'созвониться с коллегами по видеосвязи', date: tomorrowStr, completed: false },
+                        
+                        // Day plus 2
+                        { id: 'mock_9', text: 'спланировать поездку за город на выходные', date: dayPlus2Str, completed: false },
+                        
+                        // Day plus 3
+                        { id: 'mock_10', text: 'сдать зимние вещи в бережную химчистку', date: borderPlus3Str, completed: false }
                     ];
                     saveTasks();
                 }
