@@ -224,60 +224,49 @@
             </div>
 
 
-            <!-- SCREEN 3: Backup & Restore Manager -->
+            <!-- SCREEN 3: Backup & Restore Manager (Optimized without keys) -->
             <div id="screen-backup" class="hidden space-y-4 sm:space-y-6">
-                <!-- Export Box -->
-                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm space-y-3 sm:space-y-4">
-                    <div class="border-b border-cream-100 pb-2 sm:pb-3">
-                        <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
-                        <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Резервная копия</h2>
-                        <p class="text-[11px] sm:text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл или скопируйте текстовый ключ для переноса на другое устройство.</p>
-                    </div>
-
-                    <div class="space-y-2.5 sm:space-y-3">
-                        <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-2.5 sm:py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            скачать файл резервной копии
-                        </button>
-
-                        <div class="space-y-1">
-                            <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-400 uppercase">текстовый ключ для копирования</label>
-                            <textarea id="export-text-area" readonly class="w-full h-16 sm:h-20 bg-[#efede6]/40 border border-cream-200 rounded-xl p-2.5 text-xs text-cream-500 font-mono focus:outline-none resize-none no-scrollbar"></textarea>
-                            <button id="copy-text-btn" class="w-full bg-salad-100 hover:bg-salad-200 active:scale-[0.98] text-salad-600 text-xs font-bold py-2 sm:py-2.5 px-4 rounded-xl transition-all">
-                                скопировать текстовый ключ
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Import Box -->
-                <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm space-y-4">
-                    <div class="border-b border-cream-100 pb-2 sm:pb-3">
-                        <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
-                        <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Импорт планов</h2>
-                        <p class="text-[11px] sm:text-xs text-cream-500 mt-1">загрузите сохраненный файл резервной копии или вставьте скопированный ранее текстовый ключ.</p>
-                    </div>
-
-                    <div class="space-y-3">
-                        <!-- File upload -->
-                        <div class="border-2 border-dashed border-cream-300 rounded-xl p-2.5 sm:p-3 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
-                            <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                            <div class="space-y-0.5 pointer-events-none">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                <p class="text-xs font-semibold text-[#1c1a17]">выберите файл .json</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+                    <!-- Export Box -->
+                    <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="border-b border-cream-100 pb-2 sm:pb-3">
+                                <span class="text-xs font-bold tracking-wider text-salad-600 uppercase">сохранение данных</span>
+                                <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Резервная копия</h2>
+                                <p class="text-[11px] sm:text-xs text-cream-500 mt-1">экспортируйте ваши планы в файл резервной копии для сохранения на этом устройстве или переноса.</p>
                             </div>
                         </div>
 
-                        <!-- Text restore -->
-                        <div class="space-y-1">
-                            <label class="text-[9px] sm:text-[10px] font-bold tracking-wider text-cream-400 uppercase">вставить текстовый ключ</label>
-                            <textarea id="import-text-area" placeholder="вставьте ключ сюда..." class="w-full h-16 sm:h-20 bg-[#efede6]/20 border border-cream-200 rounded-xl p-2.5 text-xs text-[#1c1a17] font-mono focus:outline-none focus:ring-2 focus:ring-salad-400 resize-none"></textarea>
-                            <button id="import-text-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-2 sm:py-2.5 px-4 rounded-xl transition-all">
-                                восстановить по ключу
+                        <div class="pt-4">
+                            <button id="export-file-btn" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                скачать файл резервной копии
                             </button>
                         </div>
-                    </div>
-                </section>
+                    </section>
+
+                    <!-- Import Box -->
+                    <section class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-cream-200 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="border-b border-cream-100 pb-2 sm:pb-3">
+                                <span class="text-xs font-bold tracking-wider text-red-500 uppercase">восстановление данных</span>
+                                <h2 class="text-lg sm:text-xl font-extrabold text-[#1c1a17] mt-0.5">Импорт планов</h2>
+                                <p class="text-[11px] sm:text-xs text-cream-500 mt-1">загрузите ранее сохраненный файл резервной копии в формате .json для восстановления.</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <!-- File upload -->
+                            <div class="border-2 border-dashed border-cream-300 rounded-xl p-3 text-center hover:border-salad-400 transition-colors relative cursor-pointer group">
+                                <input type="file" id="import-file-input" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="space-y-0.5 pointer-events-none">
+                                    <svg class="w-5 h-5 mx-auto text-cream-400 group-hover:text-salad-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                    <p class="text-xs font-semibold text-[#1c1a17]">выберите файл .json</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
 
         </main>
@@ -298,17 +287,17 @@
 
     <!-- Soft Confirmation Dialog -->
     <div id="confirm-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
-        <div class="bg-white p-5 sm:p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200">
+        <div class="bg-white p-5 sm:p-6 rounded-3xl max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200 flex flex-col items-stretch text-center">
             <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">удалить все задачи?</h3>
             <p class="text-xs text-cream-500 leading-relaxed">это действие полностью очистит вашу историю задач, восстановить планы невозможно.</p>
-            <div class="flex gap-2 justify-end">
-                <button id="dialog-cancel" class="px-4 py-2 text-xs font-semibold rounded-xl bg-cream-100 hover:bg-cream-200 text-cream-500 transition-all">отмена</button>
-                <button id="dialog-confirm" class="px-4 py-2 text-xs font-semibold text-[#ffffff] rounded-xl bg-red-500 hover:bg-red-600 transition-all">удалить все</button>
+            <div class="flex flex-col gap-2 w-full pt-1">
+                <button id="dialog-confirm" class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-3 rounded-xl transition-all shadow-sm">удалить все</button>
+                <button id="dialog-cancel" class="w-full text-center text-xs font-semibold text-cream-500 py-2 transition-colors">отмена</button>
             </div>
         </div>
     </div>
 
-    <!-- Reschedule Task Dialog (Redesigned with vertical stacking and clean input style resets to fit perfectly on any phone) -->
+    <!-- Reschedule Task Dialog -->
     <div id="reschedule-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
         <div class="bg-white p-5 sm:p-6 rounded-[2rem] max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200 flex flex-col items-stretch text-center">
             <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">перенести задачу</h3>
@@ -321,6 +310,25 @@
                     перенести задачу
                 </button>
                 <button id="reschedule-cancel" class="w-full text-center text-xs font-semibold text-cream-500 hover:text-red-500 py-2 transition-colors">
+                    отмена
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Dialog (New) -->
+    <div id="edit-dialog" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-200">
+        <div class="bg-white p-5 sm:p-6 rounded-[2rem] max-w-xs w-full mx-4 shadow-xl border border-cream-200 space-y-4 transform scale-95 transition-all duration-200 flex flex-col items-stretch text-center">
+            <h3 class="font-bold text-base sm:text-lg text-[#1c1a17] lowercase">редактировать задачу</h3>
+            <p class="text-xs text-cream-500 leading-relaxed">измените текст задачи в поле ввода:</p>
+            <div class="relative">
+                <input id="edit-task-input" type="text" required class="w-full bg-[#efede6]/50 border border-cream-200 text-[#1c1a17] text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-salad-400 transition-all">
+            </div>
+            <div class="flex flex-col gap-2 w-full pt-1">
+                <button id="edit-confirm" class="w-full bg-[#1c1a17] hover:bg-salad-600 active:scale-[0.98] text-[#ffffff] text-xs font-bold py-3 rounded-xl transition-all shadow-sm">
+                    сохранить изменения
+                </button>
+                <button id="edit-cancel" class="w-full text-center text-xs font-semibold text-cream-500 hover:text-red-500 py-2 transition-colors">
                     отмена
                 </button>
             </div>
@@ -387,13 +395,16 @@
         const rescheduleConfirm = document.getElementById('reschedule-confirm');
         let activeRescheduleTaskId = null;
 
+        // Edit Task Elements
+        const editDialog = document.getElementById('edit-dialog');
+        const editTaskInput = document.getElementById('edit-task-input');
+        const editCancel = document.getElementById('edit-cancel');
+        const editConfirm = document.getElementById('edit-confirm');
+        let activeEditTaskId = null;
+
         // Backup DOM elements
-        const exportTextArea = document.getElementById('export-text-area');
-        const copyTextBtn = document.getElementById('copy-text-btn');
         const exportFileBtn = document.getElementById('export-file-btn');
         const importFileInput = document.getElementById('import-file-input');
-        const importTextArea = document.getElementById('import-text-area');
-        const importTextBtn = document.getElementById('import-text-btn');
 
         // Dialog & Toast elements
         const confirmDialog = document.getElementById('confirm-dialog');
@@ -480,8 +491,6 @@
         // Save to browser memory
         function saveTasks() {
             localStorage.setItem('weekly_tasks_pwa', JSON.stringify(state.tasks));
-            // Update export string when state changes
-            exportTextArea.value = JSON.stringify(state.tasks);
         }
 
         // Rendering Pipeline
@@ -490,9 +499,6 @@
             renderSelectedDay();
             renderOverview();
             renderMetrics();
-            
-            // Sync current state key into backup window text block
-            exportTextArea.value = JSON.stringify(state.tasks);
         }
 
         // Helper to notify user without ugly default alerts
@@ -625,10 +631,23 @@
                         <span class="${sizeClass} break-words pr-2 transition-all ${task.completed ? 'line-through text-salad-600' : 'text-[#1c1a17]'}">${task.text}</span>
                     </div>
                     <div class="flex items-center space-x-1 flex-shrink-0">
-                        <!-- Adaptive icon buttons -->
-                        <button onclick="openRescheduleModal('${task.id}')" class="text-cream-400 hover:text-accent p-1 transition-colors" title="перенести задачу">
-                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <!-- Copy/Duplicate Button -->
+                        <button onclick="duplicateTask('${task.id}')" class="text-cream-400 hover:text-salad-500 p-1 transition-colors" title="копировать задачу">
+                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                            </svg>
                         </button>
+                        <!-- Edit Button -->
+                        <button onclick="openEditModal('${task.id}')" class="text-cream-400 hover:text-salad-500 p-1 transition-colors" title="редактировать задачу">
+                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </button>
+                        <!-- Adaptive reschedule button -->
+                        <button onclick="openRescheduleModal('${task.id}')" class="text-cream-400 hover:text-accent p-1 transition-colors" title="перенести задачу">
+                            <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <!-- Delete Button -->
                         <button onclick="deleteTask('${task.id}')" class="text-cream-400 hover:text-red-500 p-1 transition-colors flex-shrink-0" title="удалить задачу">
                             <svg class="${iconSizeClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -748,6 +767,34 @@
             }
         };
 
+        // Copy/Duplicate Task
+        window.duplicateTask = function(id) {
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+                const newTask = {
+                    id: 'task_' + Date.now() + Math.random().toString(36).substr(2, 4),
+                    text: task.text,
+                    date: task.date,
+                    completed: false
+                };
+                state.tasks.push(newTask);
+                saveTasks();
+                renderAll();
+                showToast('задача скопирована');
+            }
+        };
+
+        // Open Dialog to Edit Task
+        window.openEditModal = function(id) {
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+                activeEditTaskId = id;
+                editTaskInput.value = task.text;
+                editDialog.classList.remove('opacity-0', 'pointer-events-none');
+                editDialog.querySelector('div').classList.remove('scale-95');
+            }
+        };
+
         // Screen switching function
         function switchView(viewName) {
             state.currentView = viewName;
@@ -770,9 +817,6 @@
             } else if (viewName === 'backup') {
                 document.getElementById('label-backup').className = "text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-accent";
                 screenBackup.classList.remove('hidden');
-                
-                // Refresh export string on open
-                exportTextArea.value = JSON.stringify(state.tasks);
             }
         }
 
@@ -848,6 +892,7 @@
             }
         }
 
+        // Reset mic state
         function resetMicState() {
             isListening = false;
             if (micBtn) {
@@ -967,6 +1012,29 @@
                 }
             });
 
+            // Edit events
+            editCancel.addEventListener('click', () => {
+                editDialog.classList.add('opacity-0', 'pointer-events-none');
+                editDialog.querySelector('div').classList.add('scale-95');
+                activeEditTaskId = null;
+            });
+
+            editConfirm.addEventListener('click', () => {
+                const newText = editTaskInput.value.trim();
+                if (newText && activeEditTaskId) {
+                    const task = state.tasks.find(t => t.id === activeEditTaskId);
+                    if (task) {
+                        task.text = newText;
+                        saveTasks();
+                        renderAll();
+                        showToast('задача обновлена');
+                    }
+                    editDialog.classList.add('opacity-0', 'pointer-events-none');
+                    editDialog.querySelector('div').classList.add('scale-95');
+                    activeEditTaskId = null;
+                }
+            });
+
             // DATA BACKUP & RESTORE ACTIONS
             // 1. Export JSON File Download
             exportFileBtn.addEventListener('click', () => {
@@ -989,22 +1057,7 @@
                 }
             });
 
-            // 2. Copy Text Key to Clipboard
-            copyTextBtn.addEventListener('click', () => {
-                exportTextArea.select();
-                try {
-                    const success = document.execCommand('copy');
-                    if (success) {
-                        showToast('текстовый ключ скопирован');
-                    } else {
-                        showToast('не удалось скопировать');
-                    }
-                } catch (err) {
-                    showToast('ошибка копирования');
-                }
-            });
-
-            // 3. Import JSON File from device
+            // 2. Import JSON File from device
             importFileInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -1030,33 +1083,6 @@
                     }
                 };
                 reader.readAsText(file);
-            });
-
-            // 4. Import from Text Area Key input
-            importTextBtn.addEventListener('click', () => {
-                const textInput = importTextArea.value.trim();
-                if (!textInput) {
-                    showToast('сначала вставьте текстовый ключ');
-                    return;
-                }
-
-                try {
-                    const parsed = JSON.parse(textInput);
-                    if (validateImportData(parsed)) {
-                        state.tasks = parsed;
-                        saveTasks();
-                        renderAll();
-                        showToast('данные успешно восстановлены из ключа');
-                        importTextArea.value = ''; // Reset
-                        
-                        // switch back to planner screen
-                        setTimeout(() => switchView('planner'), 800);
-                    } else {
-                        showToast('ошибка: некорректная структура ключа');
-                    }
-                } catch (err) {
-                    showToast('ошибка: не удалось расшифровать ключ');
-                }
             });
         }
 
